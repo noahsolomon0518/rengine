@@ -1,11 +1,11 @@
-from .exercises import (
+from rengine.exercises import (
     Exercise,
     ExerciseFromTypePreset,
     StrengthExercise,
     pick_random_exercise,
 )
 import pandas as pd
-from .config import (
+from rengine.config import (
     TIME_BASED_CONDITIONS,
     EquipmentAvailable,
     ExerciseLoadValues,

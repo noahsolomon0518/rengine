@@ -1,6 +1,6 @@
 from statistics import mean
 from enum import Enum, auto
-from .clean_data import clean_data
+from rengine.clean_data import clean_data
 
 class MuscleGroup:
     BICEPS = "Biceps"
@@ -11,37 +11,41 @@ class MuscleGroup:
     HAMSTRINGS = "Hamstrings"
     QUAD = "Quads"
     DELTOIDS = "Deltoids"
-    ALL = ["Back", "Calves", "Chest", "Hamstrings", "Quads", "Deltoids", "Triceps", "Biceps"]
-    LOWER_BODY = ["Calves", "Hamstrings", "Quads"]
-    UPPER_BODY = ["Back", "Chest", "Deltoids", "Triceps", "Biceps"]
+    ALL = tuple(["Back", "Calves", "Chest", "Hamstrings", "Quads", "Deltoids", "Triceps", "Biceps"])
+    LOWER_BODY = tuple(["Calves", "Hamstrings", "Quads"])
+    UPPER_BODY = tuple(["Back", "Chest", "Deltoids", "Triceps", "Biceps"])
+    PUSH = ("Chest", "Triceps", "Deltoids")
+    PULL = ("Back", "Biceps")
+    LEGS = ("Calves", "Hamstrings", "Quads")
 
 class ExerciseType:
     STRENGTH = "Strength"
     HYPERTROPHY = "Hypertrophy"
     ENDURANCE = "Endurance"
-    ALL = ["Strength", "Hypertrophy", "Endurance"]
+    ALL = tuple(["Strength", "Hypertrophy", "Endurance"])
 
 
 class ExerciseLoad:
     HEAVY = "heavy"
     MEDIUM = "medium"
     LIGHT = "light"
-    ALL = ["heavy", "medium", "light"]
+    ALL = tuple(["heavy", "medium", "light"])
 
 
 class ExperienceLevel:
     BEGINNER = "Beginner"
     INTERMEDIATE = "Intermediated"
     EXPERIENCED = "Experienced"
-    ALL = ["Beginner", "Intermediated", "Experienced"]
+    ALL = tuple(["Beginner", "Intermediated", "Experienced"])
 
 class WorkoutSplit:
-    PPL = auto()
-    BRO_SPLIT = auto()
-    UPPER_LOWER_SPLIT = auto()
-    FULL_BODY = auto()
-    PHUl = auto()
-    PHAT = auto()
+    PUSH_PULL_LEGS = "ppl"
+    BRO_SPLIT = "bs"
+    UPPER_LOWER_SPLIT = "uls" 
+    FULL_BODY = "fb"
+    PHUl = "phul"
+    PHAT = "phat"
+    ALL = ("ppl", "bs", "uls", "fb", "phul", "phat")
 
 class EquipmentAvailable:
     ALL = "all"
@@ -294,6 +298,38 @@ STRENGTH_EXERICSE_PRIORTIES = {
     }
 }
 
+
+AUTO_GENERATED_WORKOUT_PLAN_SPLIT_CONFIG = {
+    WorkoutSplit.FULL_BODY:{
+        "muscles_worked_by_day":{
+            1: [MuscleGroup.ALL for i in range(1)],
+            2: [MuscleGroup.ALL for i in range(2)],
+            3: [MuscleGroup.ALL for i in range(3)],
+            4: [MuscleGroup.ALL for i in range(4)],
+            5: [MuscleGroup.ALL for i in range(5)],
+            6: [MuscleGroup.ALL for i in range(6)],
+            7: [MuscleGroup.ALL for i in range(7)]
+        }
+    },
+    WorkoutSplit.UPPER_LOWER_SPLIT:{
+        "muscles_worked_by_day":{
+            2:[MuscleGroup.UPPER_BODY, MuscleGroup.LOWER_BODY],
+            4:[MuscleGroup.UPPER_BODY, MuscleGroup.LOWER_BODY, MuscleGroup.UPPER_BODY, MuscleGroup.LOWER_BODY],
+            6:[MuscleGroup.UPPER_BODY, MuscleGroup.LOWER_BODY, MuscleGroup.UPPER_BODY, MuscleGroup.LOWER_BODY, MuscleGroup.UPPER_BODY, MuscleGroup.LOWER_BODY]
+        }
+    },
+    WorkoutSplit.BRO_SPLIT:{
+        "muscles_worked_by_day":{
+            6:[(MuscleGroup.CHEST), (MuscleGroup.BACK), (MuscleGroup.BICEPS), (MuscleGroup.DELTOIDS), (MuscleGroup.TRICEPS), MuscleGroup.LOWER_BODY]
+        }
+    },
+    WorkoutSplit.PUSH_PULL_LEGS:{
+        "muscles_worked_by_day":{
+            3:[MuscleGroup.PUSH, MuscleGroup.PULL, MuscleGroup.LEGS],
+            6:[MuscleGroup.PUSH, MuscleGroup.PULL, MuscleGroup.LEGS, MuscleGroup.PUSH, MuscleGroup.PULL, MuscleGroup.LEGS]
+        }
+    }
+} 
 
 
 EXERCISE_DF = clean_data()

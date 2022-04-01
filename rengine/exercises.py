@@ -4,9 +4,9 @@ from statistics import mean
 from copy import deepcopy
 
 import numpy as np
-from .config import EXERCISE_CATEGORY_DATA, EquipmentAvailable, MuscleGroup
-from .config import ExerciseLoad, ExerciseType, EXERCISE_DF
-from .config import ExperienceLevel
+from rengine.config import EXERCISE_CATEGORY_DATA, EquipmentAvailable, MuscleGroup
+from rengine.config import ExerciseLoad, ExerciseType, EXERCISE_DF
+from rengine.config import ExperienceLevel
 
 
 
