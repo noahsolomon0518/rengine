@@ -5,10 +5,11 @@ HERE = pathlib.Path(__file__).parent
 
 README = (HERE / "README.md").read_text()
 
+
 # This call to setup() does all the work
 setup(
     name="rengine-workouts",
-    version="1.0.10",
+    version="1.0.13",
     description="Tools to generate workouts",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -19,7 +20,8 @@ setup(
     classifiers=[
         "License :: OSI Approved :: MIT License"
     ],
-    packages=["rengine", "rengine.scripts"],
+    install_requires=["pandas", "numpy", "dataframe_image", "openpyxl"],
+    packages=["rengine", "rengine.scripts", "rengine.data"],
     include_package_data=True,
     package_data={"rengine.data":["*"]},
     entry_points={

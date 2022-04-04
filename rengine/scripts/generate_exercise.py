@@ -1,5 +1,4 @@
 import argparse
-from ast import Store
 from rengine.config import ExerciseLoad, ExerciseType, MuscleGroup
 from rengine.exercises import pick_random_exercise
 import pprint

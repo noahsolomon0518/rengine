@@ -1,5 +1,3 @@
-from statistics import mean
-from enum import Enum, auto
 from rengine.clean_data import clean_data
 
 class MuscleGroup:

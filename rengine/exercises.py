@@ -2,6 +2,7 @@
 import random
 from statistics import mean
 from copy import deepcopy
+from typing import List, Tuple
 
 import numpy as np
 from rengine.config import EXERCISE_CATEGORY_DATA, EquipmentAvailable, MuscleGroup
@@ -10,14 +11,13 @@ from rengine.config import ExperienceLevel
 
 
 
-
 def pick_random_exercise(
-    muscle_groups_targeted: list[str], 
+    muscle_groups_targeted: List[str], 
     exercise_type: ExerciseType, 
-    allowed_loads: list[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], 
+    allowed_loads: List[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], 
     experience_levels = [ExperienceLevel.BEGINNER, ExperienceLevel.INTERMEDIATE, ExperienceLevel.EXPERIENCED], 
     equipment_available = EquipmentAvailable.ALL,
-    excluded_exercise_names: list[str] = []
+    excluded_exercise_names: List[str] = []
     ):
     """Picks random exercise based on many parameters"""
     global EXERCISE_DF
@@ -63,7 +63,7 @@ def get_muscle_group(exercise_name):
 
 class Exercise:
     """Basic implementation of an exercise"""
-    def __init__(self, exercise_name: str, sets, rep_range: tuple[int], rest_time_range: tuple[float], muscle_group: MuscleGroup = None):
+    def __init__(self, exercise_name: str, sets, rep_range: Tuple[int], rest_time_range: Tuple[float], muscle_group: MuscleGroup = None):
         self.exercise_name = exercise_name
         self.sets = sets
         self.rep_range = rep_range
@@ -84,7 +84,7 @@ class Exercise:
     
 class ExerciseFromTypePreset(Exercise):
     """Similar to Exercise class but sets, rep_range and rest_time determined by ExerciseType"""
-    def __init__(self, exercise_name: str, exercise_type: ExerciseType, allowed_loads: list[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], exercise_load: ExerciseLoad = None):
+    def __init__(self, exercise_name: str, exercise_type: ExerciseType, allowed_loads: List[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], exercise_load: ExerciseLoad = None):
         self.exercise_type = exercise_type
         self.exercise_load = exercise_load or self.pick_random_load(allowed_loads)
         super().__init__(exercise_name = exercise_name, muscle_group = get_muscle_group(exercise_name),**get_variables_based_on_exercise_type_and_load(self.exercise_type, self.exercise_load))
@@ -103,15 +103,15 @@ class ExerciseFromTypePreset(Exercise):
 
 
 class StrengthExercise(ExerciseFromTypePreset):
-    def __init__(self, exercise_name: str, allowed_loads: list[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], exercise_load: ExerciseLoad = None):
+    def __init__(self, exercise_name: str, allowed_loads: List[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], exercise_load: ExerciseLoad = None):
         super().__init__(exercise_name = exercise_name, exercise_type = ExerciseType.STRENGTH, allowed_loads=allowed_loads, exercise_load=exercise_load)
 
 class EnduranceExercise(ExerciseFromTypePreset):
-    def __init__(self, exercise_name: str, allowed_loads: list[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], exercise_load: ExerciseLoad = None):
+    def __init__(self, exercise_name: str, allowed_loads: List[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], exercise_load: ExerciseLoad = None):
         super().__init__(exercise_name = exercise_name, exercise_type = ExerciseType.ENDURANCE, allowed_loads=allowed_loads, exercise_load=exercise_load)
 
 class HypertExercise(ExerciseFromTypePreset):
-    def __init__(self, exercise_name: str, allowed_loads: list[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], exercise_load: ExerciseLoad = None):
+    def __init__(self, exercise_name: str, allowed_loads: List[ExerciseLoad] = [ExerciseLoad.HEAVY, ExerciseLoad.MEDIUM, ExerciseLoad.LIGHT], exercise_load: ExerciseLoad = None):
         super().__init__(exercise_name = exercise_name, exercise_type = ExerciseType.HYPERTROPHY, allowed_loads=allowed_loads, exercise_load=exercise_load)
 
 
