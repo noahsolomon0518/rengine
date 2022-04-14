@@ -1,4 +1,5 @@
-from rengine.clean_data import clean_data
+from rengine.dataset import get_dataset
+from rengine.config_proxy import EquipmentAvailable, ExerciseName
 
 class MuscleGroup:
     BICEPS = "Biceps"
@@ -44,63 +45,6 @@ class WorkoutSplit:
     PHUl = "phul"
     PHAT = "phat"
     ALL = ("ppl", "bs", "uls", "fb", "phul", "phat")
-
-class EquipmentAvailable:
-    ALL = "all"
-    BARBELL = "Barbell"
-    DUMBBELLS = "Dumbells"
-    EZ_BAR = "Ez-Bar"
-    TRICEPS_BAR = "Triceps Bar"
-    FLAT_BENCH = "Flat Bench"
-    INCLINE_BENCH = "Incline Bench"
-    ADJUSTABLE_BENCH = "Adjustable Bench"
-    DECLINE_BENCH = "Decline Bench"
-    WEIGHT_PLATES = "Weight Plates"
-    AB_ROLLER_WHEEL = "Ab Roller Wheel"
-    PULLUP_BAR = "Pullup Bar"
-    DIP_BAR = "Dip Bar"
-    SUSPENSION_TRAINER = "Suspension Trainer"
-    GYMNASTIC_RINGS = "Gymnastic Rings"
-    PLYO = "Plyo Box"
-    MEDICINE = "Medicine Ball"
-    KETTLEBELLS = "Kettlebells"
-    CABLE_MACHINE = "Cable Machine"
-    BICEP_CURL_MACHINE = "Bicep Curl Machine"
-    SEATED_LEG_CURL_MACHINE = "Seated Leg Curl Machine"
-    LYING_LEG_CURL_MACHINE = "Lying Leg Curl Machine"
-    LEG_EXTENSION_MACHINE = "Leg Extension Machine"
-    LEG_ABDUCTION_MACHINE = "Leg Abduction Machine"
-    ROWING_MACHINE = "Rowing Machine"
-    LAT_PULLDOWN_MACHINE = "Lat Pulldown Machine"
-    LEG_PRESS_MACHINE = "Leg Press Machine"
-    LYING_SQUAT_MACHINE = "Lying Squat Machine"
-    HACK_SQUAT_MACHINE = "Hack Squat Machine"
-    SEATED_CALF_MACHINE = "Seated Calf Machine"
-    STANDING_CALF_MACHINE = "Standing Calf Machine"
-    PEC_DEC_MACHINE = "Pec Fly Machine"
-    CABLE_CROSSOVER_MACHINE ="Cable Crossover Machine"
-    CHEST_PRESS_MACHINE = "Chest Press Machine"
-    BUTT_BLASTER_MACHINE = "Butt Blaster Machine"
-    AB_CRUNCH_MACHINE = "Ab Crunch Machine"
-    PILATES_REFORMER_MACHINE = "Pilates Reformer Machine"
-    CLIMBING_ROPE = "Climbing Rope"
-    GLUTE_HAM_DEVELOPER = "Glute Ham Developer"
-    HYPEREXTENSION_BENCH = "Hyperextension Bench"
-    PREACHER_BENCH = "Preacher Bench"
-    ABDOMINAL_BENCH = "Abdominal Bench"
-    EXERCISE_BALL = "Exercise Ball"
-    SQUAT_RACK = "Squat Rack"
-    SMITH_MACHINE = "Smith Machine"
-    POWER_RACK = "Power Rack"
-    PUSH_UP_BARS = "Push Up Bars"
-    RESISTANCE_BANDS = "Resistance Bands"
-    MACHINE_ROW_MACHINE = "Machine Row Machine"
-    CABLE_ROW_MACHINE = "Cable Row Machine"
-    SHOULDER_PRESS_MACHINE = "Shoulder Press Machine"
-    ASSISTED_DIP_MACHINE = "Assisted Dip Machine"
-    DIP_MACHINE = "Dip Machine"
-    TRICEP_EXTENSION_MACHINE = "Tricep Extension Machine"
-    ASSISTED_DIP_MACHINE = "Assisted Pull-Up Machine"
 
 
 
@@ -330,7 +274,7 @@ AUTO_GENERATED_WORKOUT_PLAN_SPLIT_CONFIG = {
 } 
 
 
-EXERCISE_DF = clean_data()
+EXERCISE_DF = get_dataset("clean_data.csv")
 
 
 
