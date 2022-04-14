@@ -21,18 +21,21 @@ def pick_random_exercise(
     ):
     """Picks random exercise based on many parameters"""
     global EXERCISE_DF
-    df_copy = EXERCISE_DF.copy()
+    df = EXERCISE_DF.copy()
     if(equipment_available != EquipmentAvailable.ALL):  
-        df_copy = df_copy[(df_copy.loc[:,equipment_available].sum(axis = 1) > 0)]
-    df_with_exercises_of_muscle_group_targeted = df_copy[(df_copy.loc[:,muscle_groups_targeted].sum(axis = 1) > 0)]
-    df_with_exercise_type = df_with_exercises_of_muscle_group_targeted[(df_with_exercises_of_muscle_group_targeted.loc[:,muscle_groups_targeted].sum(axis = 1) > 0)]
-    df_with_experience_level = df_with_exercise_type[(df_with_exercise_type.loc[:,experience_levels].sum(axis = 1) > 0)]
-    df_without_excluded_exercises = df_with_experience_level[~(df_with_experience_level["EXERCISE"].isin(excluded_exercise_names))]
-    df_without_excluded_exercises = df_without_excluded_exercises.reindex()
-    if(len(df_without_excluded_exercises) == 0):
+        df = df[df["Equipment"].isin(equipment_available)]
+    df = df[
+        (~df["EXERCISE"].isin(excluded_exercise_names)) &
+        (df["Muscle Group"].isin(muscle_groups_targeted)) &
+        (df[exercise_type] == 1) &
+        (df.loc[:,experience_levels].sum(axis = 1) > 0) 
+    ]
+    df.index = range(len(df.iloc[:,0]))
+    
+    if(len(df) == 0):
         return None
-    exercise_ind = random.randint(0, len(df_without_excluded_exercises.iloc[:,0]) - 1)
-    exercise_chose = df_without_excluded_exercises.iloc[exercise_ind, :]
+    exercise_ind = random.randint(0, len(df.iloc[:,0]) - 1)
+    exercise_chose = df.iloc[exercise_ind, :]
     return ExerciseFromTypePreset(exercise_chose["EXERCISE"], exercise_type, allowed_loads)
 
 def listify_if_non_iterable(obj):
@@ -54,11 +57,7 @@ def get_variables_based_on_exercise_type_and_load(exercise_type: ExerciseType, e
 
 def get_muscle_group(exercise_name):
         """Finds muscle group based on exercise name. If does not exist returns 'UNKNOWN'"""
-        exercise_row = EXERCISE_DF[EXERCISE_DF["EXERCISE"] == exercise_name].transpose()
-        for muscle_group in MuscleGroup.ALL:
-            if(exercise_row.loc[muscle_group].values[0]):
-                return muscle_group
-        return "UNKNOWN"
+        return EXERCISE_DF[EXERCISE_DF["EXERCISE"]==exercise_name]["Muscle Group"].values[0]
 
 
 class Exercise:

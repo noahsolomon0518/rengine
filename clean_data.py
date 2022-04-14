@@ -10,6 +10,7 @@ def clean_data():
     df = pd.read_excel(data.__file__.rstrip("__init__.py") + "exercises.xlsx", header=1)
     df = df.iloc[:,:-1]
     df["MaxReps"] = df.apply(lambda x: 1 if x["Endurance"] == 2 else 0,axis=1)
+    df = df.rename(columns = {"Stength": "Strength"})
     return df
 
 
@@ -32,7 +33,6 @@ def simplify_exercises_excel_sheet(file_name: str=None):
 
     df = df.drop(equipment_available.to_list(), axis=1)
     df = df.drop(muscle_groups.to_list(), axis=1)
-    print(df)
 
     if(file_name):
         df.to_csv(f"rengine/data/{file_name}")

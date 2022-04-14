@@ -15,7 +15,7 @@ class TestPickExercise(TestCase):
     def test_correct_exercise_type_and_muscle_group_and_load(self):
         for i in range(10):
             muscle = random.choice(MuscleGroup.ALL)
-            type = random.choice(ExerciseType.ALL)
+            type = random.choice([ExerciseType.HYPERTROPHY])
             load = [random.choice(ExerciseLoad.ALL)]
             exercise = pick_random_exercise([muscle], type, load)
             self.assertEqual(exercise.muscle_group, muscle, f"Picked exercise from wrong muscle group.")
